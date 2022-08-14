@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import s from './register.module.css'
 import {ClientForm} from "../../components/clientFotm/ClientForm";
-import {useAppDispatch} from "../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {registrationTC} from "../../bll/appReducer";
-import {appAPI} from "../../dal/api";
+import {Navigate} from "react-router-dom";
+import {path} from "../pagesPath";
 
 
 
@@ -13,15 +14,16 @@ export const Register = () => {
     const [email, setEmail] = useState<string>('')
     const [confirm, setConfirm] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-
+    const initialized = useAppSelector(state => state.app.initialized)
     const onClickConfirm = () => {
-    dispatch(registrationTC({email, password}))
-    }
-    const onClickCancel = () => {
-        appAPI.add("Hello world")
+        dispatch(registrationTC({login, email, password}))
     }
 
-    console.log(login)
+
+    if (initialized) {
+        return <Navigate to={path.MAIN}/>
+    }
+
     return (
         <div className={s.container}>
             <h2>Регистрация</h2>
@@ -38,7 +40,6 @@ export const Register = () => {
                         onChangeEmail={setEmail}
                         onChangeConfirmPassword={setConfirm}
                         onClickConfirm={onClickConfirm}
-                        onClickCancel={onClickCancel}
                         isRegister={true}
             />
         </div>

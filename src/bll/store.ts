@@ -20,3 +20,6 @@ export type AppDispatch = typeof store.dispatch
 
 export type AppStateType = ReturnType<typeof rootReducer>
 export const store = createStore(rootReducer, applyMiddleware(thunk))
+
+//@ts-ignore для проверки состояния через консоль
+window.store = store;

@@ -1,19 +1,16 @@
 {
   "users": [
     {
-      "email": "jkjkjk@mail.com",
-      "password": "$2a$10$pbXpbfw/O3aQLMNeiTKkMOTTgT4qgER/NBzHNMJSMHJrYgZisBS7e",
+      "email": "12345@mail.ru",
+      "password": "$2a$10$FnYxeRRuHfPx9kZXbTrzC.HLYOL9dv7dBt02E9mdxyOgN4ZjoiHJi",
+      "login": "Gurgen",
       "id": 1
     },
     {
-      "email": "kkkkk@bbb.ru",
-      "password": "$2a$10$nk4eMMrYwXXYTVCljeycGOhtWZ1Xx2AnIUMDbix3LvyYO5TKyP6wu",
+      "email": "222@mail.ru",
+      "password": "$2a$10$MajWpP.Lcj3LM1MviOQSzerQKed4cfrsStcTD19Fhj/Bjc5QvqFTS",
+      "login": "Gura",
       "id": 2
-    },
-    {
-      "email": "12345@mail.ru",
-      "password": "$2a$10$lT3OIXSSA80rGGk4cP9ZdODp9sp5We2oaOHcbCMoUvcYj8fTx.xf2",
-      "id": 3
     }
   ],
   "noteBook": [

@@ -6,7 +6,7 @@ import {Button, createTheme, Theme} from "@mui/material";
 type PropsType = {
     error?: boolean
     title: string
-    onClickHandler: () => void
+    onClickHandler?: () => void
 }
 const theme: Theme = createTheme({
     palette: {

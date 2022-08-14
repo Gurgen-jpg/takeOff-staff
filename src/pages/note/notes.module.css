@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.item {
+    display: flex;
+    margin-top: 10px;
+}
+.item:hover {
+    background-color: lightslategrey;
+}
+.textBlock {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.iconBlock{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

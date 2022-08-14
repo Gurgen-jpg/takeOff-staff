@@ -2,30 +2,38 @@ import React, {useState} from 'react';
 import s from "../register/register.module.css";
 import {ClientForm} from "../../components/clientFotm/ClientForm";
 import {Button} from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import {Navigate, useNavigate } from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from "../../bll/store";
+import {path} from "../pagesPath";
+import {loginTC} from "../../bll/appReducer";
 
 
 export const Login = () => {
 
     const navigate = useNavigate()
-    const [login, setLogin] = useState<string>('')
+    const dispatch = useAppDispatch()
+    const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-
+    const initialized = useAppSelector(state => state.app.initialized)
     const onClickConfirm = () => {
-
+        dispatch(loginTC({email, password}))
     }
     const onClickCancel = () => {
-
+        setEmail('')
+        setPassword('')
+    }
+    if (initialized) {
+        return <Navigate to={path.MAIN}/>
     }
 
     return (
         <div className={s.container}>
             <h2>Войти</h2>
-            <ClientForm name={login}
+            <ClientForm email={email}
                         password={password}
-                        label1="Имя"
+                        label2="Почта"
                         label3="Пароль"
-                        onChangeName={setLogin}
+                        onChangeEmail={setEmail}
                         onChangePassword={setPassword}
                         onClickConfirm={onClickConfirm}
                         onClickCancel={onClickCancel}

@@ -5,20 +5,20 @@ import {StyledButton} from "../StyledButton";
 
 
 type PropsType = {
-    name: string
+    name?: string
     email?: string
-    password: string
+    password?: string
     confirmPassword?: string
-    label1: string
+    label1?: string
     label2?: string
-    label3: string
+    label3?: string
     label4?: string
-    onChangeName: (name: string) => void
+    onChangeName?: (name: string) => void
     onChangeEmail?: (email: string) => void
-    onChangePassword: (password: string) => void
+    onChangePassword?: (password: string) => void
     onChangeConfirmPassword?: (confirmPassword: string) => void
     onClickConfirm: () => void
-    onClickCancel: () => void
+    onClickCancel?: () => void
     isRegister?: boolean
 }
 
@@ -33,17 +33,14 @@ export const ClientForm: React.FC<PropsType> = ({
                                                 }) => {
     return (
         <div className={s.container}>
-            <Input value={name}
-                   onChange={onChangeName}
-                   label={label1}/>
-            {
-                isRegister &&
+            {isRegister && <Input value={name}
+                    onChange={onChangeName}
+                    label={label1}/>}
                 <Input value={email}
                        onChange={onChangeEmail}
                        label={label2}
                        type="email"
                 />
-            }
             <Input value={password}
                    onChange={onChangePassword}
                    label={label3}
