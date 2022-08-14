@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import s from './app.module.css';
+import {useAppDispatch, useAppSelector} from "./bll/store";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {path} from './pages/pagesPath';
+import {Register} from "./pages/register/Register";
+import {Login} from "./pages/login/Login";
+import {Notes} from "./pages/note/Notes";
+import {appStatus} from "./bll/appReducerTypes";
+import {ErrorSnackBar} from "./components/ErrorSnackBar";
+import {Navbar} from "./components/navbar/Navbar";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+    const initialized = useAppSelector(state => state.app.initialized)
+
+
+    return (
+        <BrowserRouter>
+            <div className={s.container}>
+                <ErrorSnackBar/>
+                <Navbar/>
+                <Routes>
+                    <Route path={path.REGISTER} element={<Register/>}/>
+                    <Route path={path.LOGIN} element={<Login/>}/>
+                    {initialized && <Route path={path.MAIN} element={<Notes/>}/>}
+                </Routes>
+
+
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;
