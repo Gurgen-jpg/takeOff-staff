@@ -29,7 +29,6 @@ export const Input: React.FC<IInput> = ({value, onChange, label, type}) => {
                 onChange={onClickHandler}
                 label={label}
                 variant="outlined"
-                fullWidth
                 type={showHide ? type : "text"}
                 InputProps={{
                     endAdornment: type === "password"
@@ -54,5 +53,5 @@ const style = {
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "stretch",
 }

@@ -19,4 +19,13 @@ export type RegisterResponseType = {
         email: string
     }
 }
+export type AddNoteRequestType<T> = {
+    id?:T
+    name: string
+    phone: string
+    email?: string
+    age?: string
+    about?: string
+}
+
 

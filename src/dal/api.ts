@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {LoginRequestType, RegisterDataRequestType, RegisterResponseType} from "./appAPIType";
+import {AddNoteRequestType, LoginRequestType, RegisterDataRequestType, RegisterResponseType} from "./appAPIType";
 import {BookType} from "../bll/noteReducerTypes";
 
 const auth = {
@@ -33,14 +33,22 @@ export const appAPI = {
     getBook(){
       return instance
           .get(notes.note)
-          .then((response)=>{
+          .then((response: AxiosResponse<BookType>)=>{
               return response.data
           })
     },
-    add(data: string) {
+    add(data: AddNoteRequestType<undefined>) {
         return instance
             .post(notes.note, data)
-            .then((response: AxiosResponse<BookType>) => {
+            .then((response: AxiosResponse<AddNoteRequestType<string>>) => {
+                return response.data
+            })
+    },
+    deleteNote(id: string) {
+        return instance
+            .delete(notes.note + `/${id}`)
+
+            .then((response: AxiosResponse<BookType>)=>{
                 return response.data
             })
     }

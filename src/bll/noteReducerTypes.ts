@@ -1,4 +1,4 @@
-import {addNoteAC, getNoteBookAC} from "./noteReducer";
+import {addNoteAC, deleteNoteAC, getNoteBookAC} from "./noteReducer";
 
 export type NoteInitialStateType = {
     notes: BookType
@@ -7,13 +7,15 @@ export type NoteInitialStateType = {
 
 export type addNoteACType = ReturnType<typeof addNoteAC>
 export type getNoteBookACType = ReturnType<typeof getNoteBookAC>
+export type deleteNoteACType = ReturnType<typeof deleteNoteAC>
 export type NoteActionType = addNoteACType
     | getNoteBookACType
+    | deleteNoteACType
 
 export type NoteType = {
-    id: string
+    id?: string
     isActive?: boolean
-    age?: number,
+    age?: string,
     name: string,
     gender?: string,
     email?: string,
