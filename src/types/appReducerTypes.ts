@@ -1,4 +1,4 @@
-import {appStatusAC, initializeAC, setAppErrorAC, setEmailAC, setIdAC, setNameAC, setTokenAC} from "./appReducer";
+import {appStatusAC, initializeAC, setAppErrorAC, setEmailAC, setIdAC, setNameAC, setTokenAC} from "../bll/appReducer";
 
 export enum appStatus {
     loading = "loading",

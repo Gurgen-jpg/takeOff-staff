@@ -17,6 +17,7 @@ const style = {
 export type ModalTypeProps = {
     children: React.ReactNode
     open: boolean
+
 }
 export const BasicModal: React.FC<ModalTypeProps> = ({children, open}) => {
 

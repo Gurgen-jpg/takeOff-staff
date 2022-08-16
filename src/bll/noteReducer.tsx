@@ -1,8 +1,8 @@
-import {BookType, NoteActionType, NoteInitialStateType, NoteType} from "./noteReducerTypes";
+import {BookType, NoteActionType, NoteInitialStateType, NoteType} from "../types/noteReducerTypes";
 import {AppThunk} from "./store";
 import {appAPI} from "../dal/api";
 import {appStatusAC, setAppErrorAC} from "./appReducer";
-import {appStatus} from "./appReducerTypes";
+import {appStatus} from "../types/appReducerTypes";
 
 export const initialState = {
     notes: [] as BookType
@@ -25,9 +25,9 @@ export const noteReducer = (state: NoteInitialStateType = initialState, action: 
     }
 }
 export const deleteNoteAC = (id: string) => ({
-  type: 'NOTE/DELETE-NOTE',
+    type: 'NOTE/DELETE-NOTE',
     id
-}as const)
+} as const)
 export const addNoteAC = (payload: { note: NoteType }) => ({
     type: 'NOTE/ADD-NOTE',
     payload
@@ -70,17 +70,39 @@ export const addNotesTC = (data: NoteType): AppThunk => {
     }
 }
 export const deleteNoteTC = (id: string): AppThunk => {
-  return async (dispatch) =>{
-      try {
-          dispatch(appStatusAC(appStatus.loading))
-          const response = await appAPI.deleteNote(id)
-          dispatch(deleteNoteAC(id))
-          dispatch(appStatusAC(appStatus.success))
-      } catch (error: any) {
-          dispatch(setAppErrorAC(error.response.data))
-          dispatch(appStatusAC(appStatus.failed))
-      } finally {
-          dispatch(appStatusAC(appStatus.idle))
-      }
-  }
+    return async (dispatch) => {
+        try {
+            dispatch(appStatusAC(appStatus.loading))
+            await appAPI.deleteNote(id)
+            dispatch(deleteNoteAC(id))
+            dispatch(appStatusAC(appStatus.success))
+        } catch (error: any) {
+            dispatch(setAppErrorAC(error.response.data))
+            dispatch(appStatusAC(appStatus.failed))
+            return
+        } finally {
+            dispatch(appStatusAC(appStatus.idle))
+        }
+        //получить
+        dispatch(getNotesTC())
+    }
+}
+export const editNoteTC = (id: string, note: NoteType): AppThunk => {
+    return async (dispatch) => {
+        try {
+            dispatch(appStatusAC(appStatus.loading))
+            const response = await appAPI.editNote(id, note)
+            console.log(response)
+            dispatch(deleteNoteAC(id))
+            dispatch(appStatusAC(appStatus.success))
+        } catch (error: any) {
+            dispatch(setAppErrorAC(error.response.data))
+            dispatch(appStatusAC(appStatus.failed))
+            return
+        } finally {
+            dispatch(appStatusAC(appStatus.idle))
+        }
+        //получить
+        dispatch(getNotesTC())
+    }
 }

@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from "axios";
-import {AddNoteRequestType, LoginRequestType, RegisterDataRequestType, RegisterResponseType} from "./appAPIType";
-import {BookType} from "../bll/noteReducerTypes";
+import { BookType, NoteType } from "../types/noteReducerTypes";
+import {AddNoteRequestType, LoginRequestType, RegisterDataRequestType, RegisterResponseType} from "../types/appAPIType";
 
 const auth = {
     register: `register`,
@@ -26,16 +26,16 @@ export const appAPI = {
     login(data: LoginRequestType) {
         return instance
             .post(auth.login, {email: data.email, password: data.password})
-            .then((response:AxiosResponse<RegisterResponseType>) => {
+            .then((response: AxiosResponse<RegisterResponseType>) => {
                 return response.data
             })
     },
-    getBook(){
-      return instance
-          .get(notes.note)
-          .then((response: AxiosResponse<BookType>)=>{
-              return response.data
-          })
+    getBook() {
+        return instance
+            .get(notes.note)
+            .then((response: AxiosResponse<BookType>) => {
+                return response.data
+            })
     },
     add(data: AddNoteRequestType<undefined>) {
         return instance
@@ -47,9 +47,16 @@ export const appAPI = {
     deleteNote(id: string) {
         return instance
             .delete(notes.note + `/${id}`)
-
-            .then((response: AxiosResponse<BookType>)=>{
+            .then((response: AxiosResponse<BookType>) => {
+                return response.data
+            })
+    },
+    editNote(id: string, note: NoteType) {
+        return instance
+            .put(notes.note + `/${id}`, note)
+            .then((response) => {
                 return response.data
             })
     }
+
 }

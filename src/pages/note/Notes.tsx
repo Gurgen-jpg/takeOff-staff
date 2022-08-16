@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import s from "./notes.module.css";
 import {useAppDispatch, useAppSelector} from "../../bll/store";
 import {Navigate} from "react-router-dom";
@@ -6,10 +6,11 @@ import {path} from "../pagesPath";
 import {deleteNoteTC, getNoteBookAC, getNotesTC} from "../../bll/noteReducer";
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import EditIcon from '@mui/icons-material/Edit';
-import {BookType} from "../../bll/noteReducerTypes";
+
 import {BasicModal} from "../../components/modal/Modal";
 import {CreateNote} from '../../components/createNote/CreateNote';
 import {StyledButton} from "../../components/StyledButton";
+import {BookType, NoteType} from "../../types/noteReducerTypes";
 
 export const Notes = () => {
     const dispatch = useAppDispatch()
@@ -18,18 +19,24 @@ export const Notes = () => {
     const book = useAppSelector<BookType>(state => state.note.notes)
 
     const [showCreate, setShowCreate] = useState<boolean>(false)
+    const [editMod, setEditMod] = useState<boolean>(false)
+    const [editObj, setEditObj] = useState<NoteType>({name: '', phone: '', email: '', age: '', about: ''})
 
     useEffect(() => {
         initialized && dispatch(getNotesTC())
-    }, [])
-    useEffect(()=>{
+    }, [dispatch, initialized])
+    useEffect(() => {
         dispatch(getNoteBookAC(book))
-    }, [book])
+    }, [dispatch,book])
 
     const onClickDelete = (id: string | undefined) => {
         id && dispatch(deleteNoteTC(id))
-        dispatch(getNotesTC())
     }
+    const onClickEdit = useCallback((value: NoteType) => {
+        setEditObj(value)
+        setEditMod(true)
+        setShowCreate(true)
+    }, [])
 
     if (!initialized) {
         return <Navigate to={path.LOGIN}/>
@@ -37,7 +44,12 @@ export const Notes = () => {
     return (
         <>
             <BasicModal open={showCreate}>
-                <CreateNote onChange={setShowCreate}/>
+                <CreateNote onChange={setShowCreate}
+                            setEditMod={setEditMod}
+                            editMod={editMod}
+                            editObj={editObj}
+                            setEditObj={setEditObj}
+                />
             </BasicModal>
             <div className={s.container}>
                 <h2>{`${name} ваша записная книга`}</h2>
@@ -50,9 +62,12 @@ export const Notes = () => {
                                     <span>{value.phone}</span>
                                 </div>
                                 <div className={s.iconBlock}>
-                                    <EditIcon sx={{marginRight: "10px", marginLeft: "10px", cursor: "pointer"}}/>
+                                    <EditIcon sx={{marginRight: "10px", marginLeft: "10px", cursor: "pointer"}}
+                                              onClick={() => onClickEdit(value)}
+                                    />
                                     <PersonRemoveIcon sx={{color: "red", cursor: "pointer"}}
-                                                      onClick={() => onClickDelete(value.id)}/>
+                                                      onClick={() => onClickDelete(value.id)}
+                                    />
                                 </div>
                             </div>
                         ))}

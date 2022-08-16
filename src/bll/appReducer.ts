@@ -1,7 +1,8 @@
-import {AppActionType, appStatus, InitialStateType} from "./appReducerTypes";
-import {LoginRequestType, RegisterDataRequestType} from "../dal/appAPIType";
+import {AppActionType, appStatus, InitialStateType} from "../types/appReducerTypes";
+
 import {AppThunk} from "./store";
 import {appAPI} from "../dal/api";
+import {LoginRequestType, RegisterDataRequestType} from "../types/appAPIType";
 
 
 

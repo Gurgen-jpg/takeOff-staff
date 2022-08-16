@@ -1,4 +1,4 @@
-import {addNoteAC, deleteNoteAC, getNoteBookAC} from "./noteReducer";
+import {addNoteAC, deleteNoteAC, getNoteBookAC} from "../bll/noteReducer";
 
 export type NoteInitialStateType = {
     notes: BookType
